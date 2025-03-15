@@ -11,10 +11,13 @@ CFLAGS		=	-Wall -Wextra -Werror
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			$(CC) $(OBJS) mlx_linux/libmlx.a -Imlx_linux -lXext -lX11 -o $(NAME)
+			$(CC) $(OBJS) submodules/minilibx-linux/libmlx.a -Imlx_linux -lXext -lX11 -lm -o $(NAME)
 
 %.o: %.c
 		 $(CC) $(CCFLAGS) -Imlx_linux -c $< -o $@
+
+minilibx:
+			git submodule update --init
 
 clean:
 			$(RM) $(OBJS)
