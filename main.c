@@ -65,10 +65,6 @@ void	draw_julia(t_data *data)
 	// double	min_im;
 	// double	max_re;
 	// double	max_im;
-	data->min_re = -2.0;
-	data->min_im = -2.0;
-	data->max_re = 2.0;
-	data->max_im = 2.0;
 	for (int y = 0; y < HEIGHT; y++)
 	{
 		for (int x = 0; x < WIDTH; x++)
@@ -107,20 +103,28 @@ int	mouse_zoom(int button, int x, int y, t_data *data)
 		mouse_im = data->min_im + (y / (double)HEIGHT) * (data->max_im
 				- data->min_im);
 		// 範囲を縮小・拡大
+		printf("%f %f %f %f\n", data->min_re, data->min_im, data->max_re,
+			data->max_im);
 		data->min_re = mouse_re + (data->min_re - mouse_re) * zoom;
 		data->max_re = mouse_re + (data->max_re - mouse_re) * zoom;
 		data->min_im = mouse_im + (data->min_im - mouse_im) * zoom;
 		data->max_im = mouse_im + (data->max_im - mouse_im) * zoom;
+		printf("%f %f %f %f\n", data->min_re, data->min_im, data->max_re,
+			data->max_im);
 		draw_julia(data);
+		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	}
 	return (0);
 }
 int	main(void)
 {
-	t_data			data;
-	unsigned int	color2;
-	unsigned int	color;
-
+	t_data data;
+	unsigned int color2;
+	unsigned int color;
+	data.min_re = -2.0;
+	data.min_im = -2.0;
+	data.max_re = 2.0;
+	data.max_im = 2.0;
 	// t_data			img;
 	data.c_re = -0.7;
 	data.c_im = 0.37015; // 固定パラメータ（変更可能）
